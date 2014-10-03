@@ -1,4 +1,6 @@
 // We just include these so we don't have to write struct over and over
+#define const
+
 typedef struct aiPlane        aiPlane;
 typedef struct aiRay          aiRay;
 typedef struct aiColor3D      aiColor3D;

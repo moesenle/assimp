@@ -3,7 +3,7 @@ Version:             0.1
 Synopsis:            The Assimp asset import library
 
 Description:
-    /Important/: Install with
+    Important: Install with
     @cabal install --extra-include-dirs \/usr\/local\/include\/assimp\/@
     Of course use the location of the include files on your system.
     .
@@ -22,34 +22,33 @@ Description:
     information contained in it.
     .
     > module Main where
-    >
-    > import System.Environment (getArgs)
+    > 
+    > import System (getArgs)
     > import Graphics.Formats.Assimp
-    >
+    > 
     > -- Defines the preprocessing we want assimp to perform
     > processing = [ CalcTangentSpace
     >              , Triangulate
     >              , JoinIdenticalVertices
     >              , SortByPType
     >              ]
-    >
+    > 
     > main = do
     >   args <- getArgs
-    >   mapM_ (print =<<)
-    >     [ importFile (head args) processing -- Outputs all information in the scene
-    >     , getVersionMajor     -- Print the major version of assimp
-    >     , getVersionMinor     -- Print the minor version of assimp
-    >     , getVersionRevision  -- Print the version revision of assimp
-    >     ]
+    >   scene <- importFile (head args) processing
+    >   print scene                   -- Outputs all information in the scene
+    >   getVersionMajor >>= print     -- Print the major version of assimp
+    >   getVersionMinor >>= print     -- Print the minor version of assimp
+    >   getVersionRevision >>= print  -- Print the version revision of assimp
     .
     See <https://github.com/joelburget/Cologne/blob/master/Cologne/AssimpImport.hs>
     for more.
-
+    
 License:             BSD3
 License-file:        LICENSE
 Author:              Joel Burget
 Maintainer:          joelburget@gmail.com
-Copyright:           Joel Burget 2011-2012
+Copyright:           Joel Burget 2011
 Category:            Graphics
 Build-type:          Simple
 Cabal-version:       >= 1.6
@@ -57,29 +56,17 @@ Cabal-version:       >= 1.6
 Library
   Exposed-modules: Graphics.Formats.Assimp
   Other-modules:
-    Graphics.Formats.Assimp.Anim
-    Graphics.Formats.Assimp.Camera
-    Graphics.Formats.Assimp.Color4D
-    Graphics.Formats.Assimp.Config
-    Graphics.Formats.Assimp.Fun
-    Graphics.Formats.Assimp.Light
-    Graphics.Formats.Assimp.Material
-    Graphics.Formats.Assimp.Matrix
-    Graphics.Formats.Assimp.Mesh
-    Graphics.Formats.Assimp.PostProcess
-    Graphics.Formats.Assimp.Quaternion
-    Graphics.Formats.Assimp.Scene
-    Graphics.Formats.Assimp.Texture
     Graphics.Formats.Assimp.Types
-    Graphics.Formats.Assimp.Version
+    Graphics.Formats.Assimp.Storable
+    Graphics.Formats.Assimp.Fun
+    C2HS
   ghc-options: -Wall
-  Build-depends: base         >= 4     && < 5
-               , vect         >= 0.4.6 && < 0.5
-  Build-tools: hsc2hs
+  Build-depends: base      >= 4     && < 5
+               , vect      >= 0.4.6 && < 0.5
+  Build-tools: c2hs, hsc2hs
   Extensions: ForeignFunctionInterface
   Extra-libraries: assimp
-  Include-dirs:
-    include,
+  Include-dirs: 
     Graphics/Formats/
 
 Source-repository head
